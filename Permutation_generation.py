@@ -1,41 +1,38 @@
+def print_list(lst):
+    output = " ".join(str(x) for x in lst)
+    output += " "
+    print(output)
+
+
+def swap(lst, i, j):
+    temp = lst[i]
+    lst[i] = lst[j]
+    lst[j] = temp
+
+
+def reverse(lst, start, end):
+    while start < end:
+        swap(lst, start, end)
+        start += 1
+        end -= 1
+
+
 def generate_permutations(n):
-    nums = list(range(1, n + 1))
-    def swap(nums, i, j):
-        nums[i], nums[j] = nums[j], nums[i]
-
-    def reverse(nums, start):
-        i = start
-        j = len(nums) - 1
-        while i < j:
-            swap(nums, i, j)
-            i += 1
-            j -= 1
-
-    result = []
-    result.append(" ".join(map(str, nums)))
-
+    lst = list(range(1, n + 1))
+    print_list(lst)
     while True:
         i = n - 2
-        while i >= 0 and nums[i] >= nums[i + 1]:
+        while i >= 0 and lst[i] >= lst[i + 1]:
             i -= 1
-
         if i == -1:
             break
-
         j = n - 1
-        while nums[i] >= nums[j]:
+        while j > i and lst[i] >= lst[j]:
             j -= 1
-
-        swap(nums, i, j)
-
-        reverse(nums, i + 1)
-
-        result.append(" ".join(map(str, nums)))
-
-    return result
+        swap(lst, i, j)
+        reverse(lst, i + 1, n - 1)
+        print_list(lst)
 
 
-n = int(input("Enter an integer: "))
-permutations = generate_permutations(n)
-for permutation in permutations:
-    print(permutation)
+n = int(input())
+generate_permutations(n)
