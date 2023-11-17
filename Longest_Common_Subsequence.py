@@ -1,22 +1,28 @@
+import sys
+
+
 def lcs(x, y):
     n = len(x)
     m = len(y)
 
-    table = [[0 for x in range(m + 1)] for x in range(n + 1)]
+    table = [0] * (m + 1)
 
-    for i in range(n + 1):
-        for j in range(m + 1):
-            if i == 0 or j == 0:
-                table[i][j] = 0
-            elif x[i - 1] == y[j - 1]:
-                table[i][j] = table[i - 1][j - 1] + 1
+    for i in range(1, n + 1):
+        prev = 0
+        for j in range(1, m + 1):
+            current = table[j]
+            if x[i - 1] == y[j - 1]:
+                table[j] = prev + 1
             else:
-                table[i][j] = max(table[i - 1][j], table[i][j - 1])
+                table[j] = max(table[j - 1], table[j])
+            prev = current
 
-    return table[n][m]
+    result = table[m]
+
+    return result
 
 
-n, m = map(int, input().split())
-x = list(map(int, input().split()))
-y = list(map(int, input().split()))
-print(lcs(x, y))
+n, m = map(int, sys.stdin.readline().split())
+x = list(map(int, sys.stdin.readline().split()))
+y = list(map(int, sys.stdin.readline().split()))
+sys.stdout.write(str(lcs(x, y)))
