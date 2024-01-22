@@ -1,7 +1,3 @@
-import sys
-from itertools import combinations
-
-
 def solve(N, M, Q, d, q):
     INF = float('inf')
     dp = [[INF] * (1 << N) for _ in range(M + 1)]
